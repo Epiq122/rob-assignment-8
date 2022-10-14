@@ -11,7 +11,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         Assignment8 assignment8 = new Assignment8();
 
         List<Integer> numbersList = new ArrayList<>();
@@ -21,9 +21,13 @@ public class Main {
         ExecutorService pool = Executors.newCachedThreadPool();
 
         for (int i = 0; i < 1000; i++ ){
-            CompletableFuture<Void> task =
-                    CompletableFuture.supplyAsync(assignment8::getNumbers,pool).thenAccept(numbersList::addAll);
-            tasks.add(task);
+          CompletableFuture<Void> task =
+                  CompletableFuture.supplyAsync(assignment8::getNumbers,pool).thenAcceptAsync(numbersList::addAll,pool);
+          tasks.add(task);
+        }
+
+        while(tasks.stream().filter(CompletableFuture::isDone).count() <1000){
+            Thread.sleep(100);
         }
 
         Map<Integer, Integer> numMap = numbersList.stream().collect(Collectors.toMap(Function.identity(),sameValue -> 1,

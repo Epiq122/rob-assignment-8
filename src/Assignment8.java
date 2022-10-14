@@ -9,7 +9,7 @@ import java.util.stream.IntStream;
 
 public class Assignment8 {
     private List<Integer> numbers = null;
-    private AtomicInteger i = new AtomicInteger(0);
+    private final AtomicInteger i = new AtomicInteger(0);
 
     public Assignment8() {
         try {
@@ -17,7 +17,7 @@ public class Assignment8 {
             // and place the file in the root of your Java project
             numbers = Files.readAllLines(Paths.get("output.txt"))
                            .stream()
-                           .map(n -> Integer.parseInt(n))
+                           .map(n->Integer.parseInt(n))
                            .collect(Collectors.toList());
         } catch (IOException e) {
             e.printStackTrace();
@@ -44,7 +44,7 @@ public class Assignment8 {
         // delay
         try {
             Thread.sleep(500);
-        } catch (InterruptedException e) {
+        } catch (InterruptedException ignored) {
         }
 
         List<Integer> newList = new ArrayList<>();
