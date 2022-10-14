@@ -17,7 +17,7 @@ public class Assignment8 {
             // and place the file in the root of your Java project
             numbers = Files.readAllLines(Paths.get("output.txt"))
                            .stream()
-                           .map(n->Integer.parseInt(n))
+                           .map(Integer::parseInt)
                            .collect(Collectors.toList());
         } catch (IOException e) {
             e.printStackTrace();
@@ -49,9 +49,7 @@ public class Assignment8 {
 
         List<Integer> newList = new ArrayList<>();
         IntStream.range(start, end)
-                 .forEach(n -> {
-                     newList.add(numbers.get(n));
-                 });
+                 .forEach(n -> newList.add(numbers.get(n)));
         System.out.println("Done Fetching records " + start + " to " + (end));
         return newList;
     }
